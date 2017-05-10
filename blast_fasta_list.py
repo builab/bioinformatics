@@ -26,7 +26,7 @@ with open("seq_list_fixed.txt") as f:
 	# Loop through each line
 	for line in f:
 		# Remove white space at the end
-		line = line.rstrip('\n')
+		line = line.strip()
 		# If the string is not empty
 		if line:
 			print "Blasting UniprotID ", line
