@@ -1,8 +1,10 @@
 # Biopython script to blast from a list of file
 # HB 2017/05
+# Update 2020/02
  
 from Bio.Blast import NCBIWWW
 import os
+import sys
 
 # Function to blast fasta
 def blastFasta(fastaFile):
@@ -22,7 +24,7 @@ def blastFasta(fastaFile):
 	
 # Now start to process the list	
 # Parse the list
-with open("seq_list_fixed.txt") as f:
+with open(sys.argv[0]) as f:
 	# Loop through each line
 	for line in f:
 		# Remove white space at the end
@@ -31,6 +33,6 @@ with open("seq_list_fixed.txt") as f:
 		if line:
 			print "Blasting UniprotID ", line
 			# Blast it
-			blastFasta( "fixed_fasta/" + line + ".fasta" )
+			blastFasta( line + ".fasta" )
 		
 	
