@@ -39,7 +39,7 @@ def parseBlastXML(blastXml):
 
 
 # Now start to process the list
-with open("seq_list.txt") as f:
+with open(sys.argv[1]) as f:
 	# Loop through each line
 	for line in f:
 		# Remove white space at the end
