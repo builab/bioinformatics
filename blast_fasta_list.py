@@ -6,6 +6,11 @@ from Bio.Blast import NCBIWWW
 import os
 import sys
 
+tetra="txid5911[ORGN]"
+homosapien="txid9606[ORGN]"
+chlamy="txid3052[ORGN]"
+
+
 # Function to blast fasta
 def blastFasta(fastaFile):
 	# Read the fasta file
@@ -13,7 +18,7 @@ def blastFasta(fastaFile):
 	name, extension = os.path.splitext(fastaFile)
 	xmlFile = name + ".xml"
 	# Blast in NCBI
-	result_handle = NCBIWWW.qblast("blastp", "refseq_protein", fasta_string)
+	result_handle = NCBIWWW.qblast("blastp", "refseq_protein", fasta_string, entrez_query=tetra)
     # Write out result in xml file
 	with open(xmlFile, "w") as out_handle:
 		out_handle.write(result_handle.read())
