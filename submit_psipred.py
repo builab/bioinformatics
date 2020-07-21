@@ -2,8 +2,11 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Jul 12 00:33:50 2020
+Last modified 20200721
 
-Script to retrieve separate FASTA file from a list of uniprot ID
+Script to submit a list of Uniprot ID for PSIPRED prediction
+It will automatically download the Uniprot fasta file and submit
+then download the results to the same directory
 
 See further
 http://bioinf.cs.ucl.ac.uk/web_servers/web_services/
@@ -12,8 +15,10 @@ http://bioinf.cs.ucl.ac.uk/web_servers/web_services/
 """
 
 
-import os, time
 import requests
+import urllib, argparse, os, time
+
+
 
 
 """ Submit psipred job """
@@ -56,29 +61,40 @@ def psipredDownload(datapath, pID, outdir):
 	
 	with open(outdir + '/' + pID + '.horiz','wb') as f:
 		   f.write(r2.content)
-		   
-   
-   #NOTE: Once posted you will need to use the GET submission endpoint
-#to retrieve your results. Polling the server about once every 2 or 5 mins
-#should be sufficient.
-#
-# Full details at http://bioinf.cs.ucl.ac.uk/web_servers/web_services/
+		      
+""" Retrieve the fasta sequence from uniprot ID and write to an output file """
+
+def retrieveFasta(pID, outfile):
+	print('Retrieving ' + pID)
+	response = urllib.request.urlopen("http://www.uniprot.org/uniprot/" + pID + ".fasta").read()
+	content = response.decode('utf-8')
+	outhandle = open(outfile, 'w')
+	outhandle.write(content)
+	outhandle.close()
 
 
 if __name__=='__main__':	
-	
-	pIDlist = ['P41352', 'I7M9N6', 'Q7Z2D1']
+	parser = argparse.ArgumentParser(description='Automatically submit a list of Uniprot protein to PSIPRED');
+	parser.add_argument('--list', help='Input of Uniprot ID list',required=True)
+	parser.add_argument('--email', help='Email for job submission',required=False,default='huy.bui@mcgill.ca')
+	parser.add_argument('--odir', help='Output directory for output',required=True)
 
+	args = parser.parse_args()
 	
-	email = 'huy.bui@mcgill.ca'
-	path = '/Users/kbui2/Desktop/python/dirp/fasta/'
-	outdir = path
+	listid = open(args.list, 'r')
+	pIDlist = listid.read().splitlines()
+	listid.close()
+	
+	email = args.email
+	outdir = args.odir
 	
 	for pID in pIDlist:
-		filepath = path + pID + '.fasta'
-		print('Submit ' + filepath )
+		outfile = outdir + '/' + pID + '.fasta'
+		retrieveFasta(pID, outfile)
+		
+		print('Submit ' + outfile )
 
-		uuid = psipredSubmit(pID, filepath, email)
+		uuid = psipredSubmit(pID, outfile, email)
 		while True:
 			time.sleep(300)
 			dict = psipredProgress(uuid)
