@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Jul 12 00:33:50 2020
+Last updated Jul 26, 2020
 
 Script to retrieve separate FASTA file from a list of uniprot ID
 
