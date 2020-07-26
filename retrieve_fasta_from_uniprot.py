@@ -7,11 +7,9 @@ Script to retrieve separate FASTA file from a list of uniprot ID
 
 @author: kbui2
 """
-
 import urllib, argparse, time
 
 """ Retrieve the fasta sequence from uniprot ID and write to an output file """
-
 def retrieveFasta(pID, outfile):
 	print('Retrieving ' + pID)
 	response = urllib.request.urlopen("http://www.uniprot.org/uniprot/" + pID + ".fasta").read()
@@ -22,14 +20,28 @@ def retrieveFasta(pID, outfile):
 	
 if __name__=='__main__':
 	parser = argparse.ArgumentParser(description='Retrieve sequence of Uniprot ID')
-	parser.add_argument('--i', help='Input of ID list',required=True)
+	parser.add_argument('--id', help='Input of ID list',required=False)
+	parser.add_argument('--ilist', help='Input of ID list',required=False)
 	parser.add_argument('--odir', help='Output directory location',required=True)
 
 	args = parser.parse_args()
 	
+	if args.id is None and args.ilist is None:
+		   parser.error("Require either --id or --ilist")
+
+	if args.id is not None and args.ilist is not None:
+		   parser.error("Use either --id or --ilist")
+		   
 	outdir = args.odir
-	
-	list = open(args.i, 'r')
+
+	useList = 1
+	if args.id is None:
+		useList = 1
+		list = open(args.ilist, 'r')
+	else:
+		useList = 0
+		list = {args.id}
+		
 	
 	
 	for line in list:
@@ -39,4 +51,5 @@ if __name__=='__main__':
 			retrieveFasta(line, out)
 		time.sleep(5)
 		
-	list.close()
+	if useList == 1:
+		list.close()
