@@ -46,7 +46,8 @@ def psipredProgress(uuid):
 	
 """ Get psipred job results ss2, horiz file """
 
-def psipredDownload(datapath, pID, outdir):
+def psipredDownload(ss2, pID, outdir):
+	""" Download ss2 file """
 	url = 'http://bioinf.cs.ucl.ac.uk/psipred/api'	
 	# SS2 file
 	r = requests.get(url + ss2)	
