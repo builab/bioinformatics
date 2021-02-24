@@ -17,7 +17,7 @@ http://bioinf.cs.ucl.ac.uk/web_servers/web_services/
 
 
 import requests
-import urllib, argparse, os, time
+import urllib, argparse, os, time, urllib.request
 
 
 """ Submit psipred job """
