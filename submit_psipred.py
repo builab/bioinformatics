@@ -15,7 +15,6 @@ http://bioinf.cs.ucl.ac.uk/web_servers/web_services/
 @author: kbui2
 """
 
-
 import requests
 import urllib, argparse, os, time, urllib.request
 
@@ -67,12 +66,12 @@ def retrieveFasta(pID, outfile):
 	outhandle.write(content)
 	outhandle.close()
 	
-def trimFasta(file, newfile)
+def trimFasta(file, trimfile):
 	""" Trim the header with > of fasta file """
 	fastain = open(file, 'r')
-	fastaout = open(newfile, 'w')
+	fastaout = open(trimfile, 'w')
 	for line in fastain:
-		if line[0] == '>'
+		if line[0] == '>':
 			continue
 		fastaout.write(line)
 	fastain.close()
@@ -94,8 +93,8 @@ if __name__=='__main__':
 	outdir = args.odir
 	
 	for pID in pIDlist:
-		outfile = outdir + '/' + pID + '.fasta'
-		trimfile = outdir + '/' + pID + '_trim.fasta'
+		outfile = outdir + '/' + pID + '_full.fasta'
+		trimfile = outdir + '/' + pID + '.fasta'
 
 		retrieveFasta(pID, outfile)
 		trimFasta(outfile, trimfile)
@@ -103,7 +102,7 @@ if __name__=='__main__':
 		
 		print('Submit ' + trimfile)
 
-		uuid = psipredSubmit(pID, outfile, email)
+		uuid = psipredSubmit(pID, trimfile, email)
 		while True:
 			time.sleep(300)
 			dict = psipredProgress(uuid)
