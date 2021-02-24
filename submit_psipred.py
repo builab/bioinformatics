@@ -114,6 +114,8 @@ if __name__=='__main__':
 	
 		out = dict['submissions'][0]['results']
 		ss2 = out[5]['data_path']
+		
+		print(out)
 	
 		print ('Download results')
 		psipredDownload(ss2, pID, outdir)
