@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Jul 12 00:33:50 2020
-Last modified 20210701
+Last modified 20210226 fix urllib.request, need to type python3 submit_psipred
+For psipred, fasta file must be clean without the header
 
 
 Script to submit a list of Uniprot ID for PSIPRED prediction
