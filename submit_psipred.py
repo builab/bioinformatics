@@ -48,15 +48,18 @@ def psipredProgress(uuid):
 
 def psipredDownload(ss2, pID, outdir):
 	""" Download ss2 file """
-	url = 'http://bioinf.cs.ucl.ac.uk/psipred/api/submissions/'	
+	url = 'http://bioinf.cs.ucl.ac.uk/psipred/api'	
 	# SS2 file
 	r = requests.get(url + ss2)	
 	with open(outdir + '/' + pID + '.ss2','wb') as f:
-		   f.write(r.content)		   
+		f.write(r.content)	
+	f.close()
     	# Horiz file
 	r2 = requests.get(url + str.replace(ss2, '.ss2', '.horiz'))	
-	with open(outdir + '/' + pID + '.horiz','wb') as f:
-		   f.write(r2.content)
+	with open(outdir + '/' + pID + '.horiz','wb') as f2:
+		f2.write(r2.content)
+	f2.close()
+		
 		      
 """ Retrieve the fasta sequence from uniprot ID and write to an output file """
 
