@@ -47,17 +47,13 @@ def psipredProgress(uuid):
 """ Get psipred job results ss2, horiz file """
 
 def psipredDownload(datapath, pID, outdir):
-	url = 'http://bioinf.cs.ucl.ac.uk/psipred/api'
-	
+	url = 'http://bioinf.cs.ucl.ac.uk/psipred/api'	
 	# SS2 file
-	r = requests.get(url + ss2)
-	
+	r = requests.get(url + ss2)	
 	with open(outdir + '/' + pID + '.ss2','wb') as f:
-		   f.write(r.content)
-		   
-    # Horiz file
-	r2 = requests.get(url + str.replace(ss2, '.ss2', '.horiz'))
-	
+		   f.write(r.content)		   
+    	# Horiz file
+	r2 = requests.get(url + str.replace(ss2, '.ss2', '.horiz'))	
 	with open(outdir + '/' + pID + '.horiz','wb') as f:
 		   f.write(r2.content)
 		      
@@ -70,7 +66,17 @@ def retrieveFasta(pID, outfile):
 	outhandle = open(outfile, 'w')
 	outhandle.write(content)
 	outhandle.close()
-
+	
+def trimFasta(file, newfile)
+	""" Trim the header with > of fasta file """
+	fastain = open(file, 'r')
+	fastaout = open(newfile, 'w')
+	for line in fastain:
+		if line[0] == '>'
+			continue
+		fastaout.write(line)
+	fastain.close()
+	fastaout.close()
 
 if __name__=='__main__':	
 	parser = argparse.ArgumentParser(description='Automatically submit a list of Uniprot protein to PSIPRED');
@@ -89,9 +95,13 @@ if __name__=='__main__':
 	
 	for pID in pIDlist:
 		outfile = outdir + '/' + pID + '.fasta'
+		trimfile = outdir + '/' + pID + '_trim.fasta'
+
 		retrieveFasta(pID, outfile)
+		trimFasta(outfile, trimfile)
 		
-		print('Submit ' + outfile )
+		
+		print('Submit ' + trimfile)
 
 		uuid = psipredSubmit(pID, outfile, email)
 		while True:
