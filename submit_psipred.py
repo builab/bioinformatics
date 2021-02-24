@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Jul 12 00:33:50 2020
-Last modified 20200721
+Last modified 20210701
+
 
 Script to submit a list of Uniprot ID for PSIPRED prediction
 It will automatically download the Uniprot fasta file and submit
@@ -17,8 +18,6 @@ http://bioinf.cs.ucl.ac.uk/web_servers/web_services/
 
 import requests
 import urllib, argparse, os, time
-
-
 
 
 """ Submit psipred job """
