@@ -48,7 +48,7 @@ def psipredProgress(uuid):
 
 def psipredDownload(ss2, pID, outdir):
 	""" Download ss2 file """
-	url = 'http://bioinf.cs.ucl.ac.uk/psipred/api'	
+	url = 'http://bioinf.cs.ucl.ac.uk/psipred/api/submissions/'	
 	# SS2 file
 	r = requests.get(url + ss2)	
 	with open(outdir + '/' + pID + '.ss2','wb') as f:
