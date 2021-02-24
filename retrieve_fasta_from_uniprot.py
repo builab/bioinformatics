@@ -8,7 +8,7 @@ Script to retrieve separate FASTA file from a list of uniprot ID
 
 @author: kbui2
 """
-import urllib, argparse, time
+import urllib, argparse, time, urllib.request
 
 """ Retrieve the fasta sequence from uniprot ID and write to an output file """
 def retrieveFasta(pID, outfile):
