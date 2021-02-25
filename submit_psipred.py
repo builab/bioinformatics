@@ -86,11 +86,12 @@ def trimFasta(file, trimfile):
 def calcLength(file):
 	""" Calc the length of fasta file """
 	fastain = open(file, 'r')
+	aalen = 0
 	for line in fastain:
 		if line[0] == '>':
 			continue
-		aalen = len(line)
-		break
+		aalen = aalen + len(line)
+	
 	fastain.close()
 	return aalen
 
@@ -122,6 +123,8 @@ if __name__=='__main__':
 		
 		if calcLength(trimfile) > PSIPREDLIMIT:
 			print('Skip due to length limit')
+			continue
+			
 		print ('AA length ' + str(calcLength(trimfile)))
 		print('Submit ' + trimfile)
 
