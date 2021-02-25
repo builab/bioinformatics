@@ -4,6 +4,7 @@
 Created on Sun Jul 12 00:33:50 2020
 Last modified 20210226 fix urllib.request, need to type python3 submit_psipred
 For psipred, fasta file must be clean without the header
+Skip protein > 1500A (limit of psipred)
 
 
 Script to submit a list of Uniprot ID for PSIPRED prediction
@@ -81,6 +82,17 @@ def trimFasta(file, trimfile):
 		fastaout.write(line)
 	fastain.close()
 	fastaout.close()
+	
+def calcLength(file)
+	""" Calc the length of fasta file """
+	fastain = open(file, 'r')
+	for line in fastain:
+		if line[0] == '>':
+			continue
+		aalen = len(line)
+		break
+	fastain.close()
+	return aalen
 
 if __name__=='__main__':	
 	parser = argparse.ArgumentParser(description='Automatically submit a list of Uniprot protein to PSIPRED');
@@ -89,6 +101,8 @@ if __name__=='__main__':
 	parser.add_argument('--odir', help='Output directory for output',required=True)
 
 	args = parser.parse_args()
+	
+	PSIPLUSLIMIT = 1500
 	
 	listid = open(args.list, 'r')
 	pIDlist = listid.read().splitlines()
@@ -105,6 +119,9 @@ if __name__=='__main__':
 		trimFasta(outfile, trimfile)
 		
 		
+		if calcLength(trimfile) > PSIPLUSLIMIT
+			print('Skip due to length limit')
+		print ('AA length ' + str(calcLength(trimfile)))
 		print('Submit ' + trimfile)
 
 		uuid = psipredSubmit(pID, trimfile, email)
