@@ -83,7 +83,7 @@ def trimFasta(file, trimfile):
 	fastain.close()
 	fastaout.close()
 	
-def calcLength(file):
+def calcFastaLength(file):
 	""" Calc the length of fasta file """
 	fastain = open(file, 'r')
 	aalen = 0
@@ -121,11 +121,11 @@ if __name__=='__main__':
 		trimFasta(outfile, trimfile)
 		
 		
-		if calcLength(trimfile) > PSIPREDLIMIT:
+		if calcFastaLength(trimfile) > PSIPREDLIMIT:
 			print('Skip due to length limit')
 			continue
 			
-		print ('AA length ' + str(calcLength(trimfile)))
+		print ('AA length ' + str(calcFastaLength(trimfile)))
 		print('Submit ' + trimfile)
 
 		uuid = psipredSubmit(pID, trimfile, email)
