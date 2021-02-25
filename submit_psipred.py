@@ -7,6 +7,8 @@ For psipred, fasta file must be clean without the header
 Skip protein > 1500A (limit of psipred)
 Ignore_exsisting function
 
+Problem: still doesn't work well with nohup, need to use python3 to run
+
 
 Script to submit a list of Uniprot ID for PSIPRED prediction
 It will automatically download the Uniprot fasta file and submit
