@@ -130,7 +130,7 @@ if __name__=='__main__':
 
 		uuid = psipredSubmit(pID, trimfile, email)
 		while True:
-			time.sleep(300)
+			time.sleep(180)
 			dict = psipredProgress(uuid)
 			print('Job ' + uuid + ' is ' + dict['state'])
 			if dict['state'] == 'Complete':
