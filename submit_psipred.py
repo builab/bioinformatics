@@ -102,7 +102,7 @@ if __name__=='__main__':
 	parser.add_argument('--list', help='Input of Uniprot ID list',required=True)
 	parser.add_argument('--email', help='Email for job submission',required=False,default='huy.bui@mcgill.ca')
 	parser.add_argument('--odir', help='Output directory for output',required=True)
-	parser.add_argument('--ignore_existing', help='Ignore existing file (1/0)',required=Fase,default='0')
+	parser.add_argument('--ignore_existing', help='Ignore existing file (1/0)',required=False,default='0')
 
 	args = parser.parse_args()
 	
