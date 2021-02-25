@@ -102,7 +102,8 @@ if __name__=='__main__':
 
 	args = parser.parse_args()
 	
-	PSIPLUSLIMIT = 1500
+	# Limit of PSIPRED
+	PSIPREDLIMIT = 1500
 	
 	listid = open(args.list, 'r')
 	pIDlist = listid.read().splitlines()
@@ -119,7 +120,7 @@ if __name__=='__main__':
 		trimFasta(outfile, trimfile)
 		
 		
-		if calcLength(trimfile) > PSIPLUSLIMIT
+		if calcLength(trimfile) > PSIPREDLIMIT:
 			print('Skip due to length limit')
 		print ('AA length ' + str(calcLength(trimfile)))
 		print('Submit ' + trimfile)
