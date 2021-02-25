@@ -5,6 +5,7 @@ Created on Sun Jul 12 00:33:50 2020
 Last modified 20210226 fix urllib.request, need to type python3 submit_psipred
 For psipred, fasta file must be clean without the header
 Skip protein > 1500A (limit of psipred)
+Ignore_exsisting function
 
 
 Script to submit a list of Uniprot ID for PSIPRED prediction
@@ -19,6 +20,7 @@ http://bioinf.cs.ucl.ac.uk/web_servers/web_services/
 
 import requests
 import urllib, argparse, os, time, urllib.request
+import os.path
 
 
 """ Submit psipred job """
@@ -100,6 +102,7 @@ if __name__=='__main__':
 	parser.add_argument('--list', help='Input of Uniprot ID list',required=True)
 	parser.add_argument('--email', help='Email for job submission',required=False,default='huy.bui@mcgill.ca')
 	parser.add_argument('--odir', help='Output directory for output',required=True)
+	parser.add_argument('--ignore_existing', help='Ignore existing file (1/0)',required=Fase,default='0')
 
 	args = parser.parse_args()
 	
@@ -112,6 +115,8 @@ if __name__=='__main__':
 	
 	email = args.email
 	outdir = args.odir
+	
+	ignore_existing = int(args.ignore_existing)
 	
 	for pID in pIDlist:
 		outfile = outdir + '/' + pID + '_full.fasta'
@@ -126,6 +131,10 @@ if __name__=='__main__':
 			continue
 			
 		print ('AA length ' + str(calcFastaLength(trimfile)))
+		if os.path.exists(outdir + "/" + pID + ".ss2") and ignore_existing == 1:
+			print('Skip ' + pID + ' due to existing file')
+			continue
+		
 		print('Submit ' + trimfile)
 
 		uuid = psipredSubmit(pID, trimfile, email)
