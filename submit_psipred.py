@@ -83,7 +83,7 @@ def trimFasta(file, trimfile):
 	fastain.close()
 	fastaout.close()
 	
-def calcLength(file)
+def calcLength(file):
 	""" Calc the length of fasta file """
 	fastain = open(file, 'r')
 	for line in fastain:
