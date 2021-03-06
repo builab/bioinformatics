@@ -121,6 +121,10 @@ if __name__=='__main__':
 	ignore_existing = int(args.ignore_existing)
 	
 	for pID in pIDlist:
+		if os.path.exists(outdir + "/" + pID + ".ss2") and ignore_existing == 1:
+			print('Skip ' + pID + ' due to existing file')
+			continue
+			
 		outfile = outdir + '/' + pID + '_full.fasta'
 		trimfile = outdir + '/' + pID + '.fasta'
 
@@ -133,9 +137,7 @@ if __name__=='__main__':
 			continue
 			
 		print ('AA length ' + str(calcFastaLength(trimfile)))
-		if os.path.exists(outdir + "/" + pID + ".ss2") and ignore_existing == 1:
-			print('Skip ' + pID + ' due to existing file')
-			continue
+
 		
 		print('Submit ' + trimfile)
 
